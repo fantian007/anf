@@ -2,7 +2,7 @@
   "name": "@sprit/anf",
   "description": "数值格式化工具",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
