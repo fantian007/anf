@@ -17,7 +17,7 @@ group:
 
 #### 方式一
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 const value = anf(123.456);
 
@@ -27,7 +27,7 @@ console.log(value); // 123.46
 
 #### 方式二
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 const value = anf({ precision: 2 }, 123.456);
 
@@ -37,7 +37,7 @@ console.log(value); // 123.46
 
 #### 方式三
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 const formatter = anf({ precision: 2, trimTailZero: false });
 
@@ -49,9 +49,9 @@ console.log(value2); // 123.40
 ```
 formatter 是一个自定义配置的格式化函数，可以使用一份相同配置，对多个数值进行格式化
 
-### 方式四（类形式）
+#### 方式四（类形式）
 ```javascript
-import { AutoNumberFormat } from 'anf';
+import { AutoNumberFormat } from '@sprit/anf';
 
 new AutoNumberFormat('1.100').format() // => 1.1
 new AutoNumberFormat('1.100').format({ trimTailZero: false }) // => 1.10

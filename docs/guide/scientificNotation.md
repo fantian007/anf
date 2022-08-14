@@ -15,7 +15,7 @@ group:
 支持科学计数法的格式化
 
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 anf('1e3'); // 1,000
 

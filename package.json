@@ -43,17 +43,6 @@
   "engines": {
     "node": ">=10"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
-  },
   "size-limit": [
     {
       "path": "dist/anf.cjs.production.min.js",

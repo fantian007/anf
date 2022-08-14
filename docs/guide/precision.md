@@ -13,7 +13,7 @@ group:
 
 ### 使用
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 // 精度为 2
 anf({ precision: 2 }, 123.456); // 123.46

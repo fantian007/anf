@@ -13,7 +13,7 @@ group:
 
 ### 使用
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 anf(12345.67); // 12,345.67
 

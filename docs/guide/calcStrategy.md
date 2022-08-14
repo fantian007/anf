@@ -19,7 +19,7 @@ group:
 
 ### 使用
 ```javascript
-import anf from 'anf';
+import anf from '@sprit/anf';
 
 anf({ calcStrategy: 'zh_CN' }, 12345.67); // 1.23万
 anf({ calcStrategy: 'en_US' }, 12345.67); // 12.35K

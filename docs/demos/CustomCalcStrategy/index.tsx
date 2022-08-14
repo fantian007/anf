@@ -1,8 +1,8 @@
 import React from 'react';
 import BN from 'bignumber.js';
 
-import { IValue, IOption, IParse } from 'anf/dist/esm/typings';
-import anf, { StrategyManager, AbstractCalcStrategy, Helpers } from 'anf';
+import { IValue, IOption, IParse } from '@sprit/anf/dist/esm/typings';
+import anf, { StrategyManager, AbstractCalcStrategy, Helpers } from '@sprit/anf';
 const { processPrecision, processTrimNumTailZero, processThousandsSplit, processSuffixUppercase } = Helpers;
 
 /**

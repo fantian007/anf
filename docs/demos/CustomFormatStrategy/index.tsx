@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IValue, IOption, IParse, ICalc } from 'anf/dist/esm/typings';
-import anf, { StrategyManager, AbstractFormatStrategy, Helpers } from 'anf';
+import { IValue, IOption, IParse, ICalc } from '@sprit/anf/dist/esm/typings';
+import anf, { StrategyManager, AbstractFormatStrategy, Helpers } from '@sprit/anf';
 
 /**
  * 实现自定义策略

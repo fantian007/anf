@@ -14,7 +14,7 @@ group:
 ### 安装
 
 ```shell
-yarn add anf
+yarn add @sprit/anf
 ```
 
 
