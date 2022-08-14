@@ -20,4 +20,8 @@ jobs:
       - run: npm i -g yarn
       - run: yarn
       - run: yarn docs:build
-      - run: git subtree push --prefix=docs-dist origin gh-pages
+      - run: git symbolic-ref HEAD ref/heads/gh-pages
+      - run: rm -rf docs && mv docs-dist docs
+      - run: git add docs
+      - run: git commit -m ":wrench: 文档"
+      - run: git push -u origin gh-pages
