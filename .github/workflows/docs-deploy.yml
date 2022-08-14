@@ -22,6 +22,6 @@ jobs:
       - run: yarn docs:build
       - uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          GITHUB_TOKEN: ${{secrets.DOCS_DEPLOY_TOKEN}}
-          BRANCH: gh-pages
-          FOLDER: docs-dist
+          token: ${{secrets.ACCESS_TOKEN}}
+          branch: gh-pages
+          folder: docs-dist
