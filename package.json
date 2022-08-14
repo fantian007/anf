@@ -1,0 +1,82 @@
+{
+  "private": true,
+  "name": "anf",
+  "license": "MIT",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "dumi dev",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "build": "father build",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "test",
+    "README.md"
+  ],
+  "homepage": "https://fantian007.github.io/anf",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fantian007/anf.git"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/esm/index.d.ts",
+  "author": {
+    "name": "赵永盛",
+    "email": "1562743134@qq.com"
+  },
+  "contributors": [
+    "1562743134@qq.com"
+  ],
+  "maintainers": [
+    "1562743134@qq.com"
+  ],
+  "readme": "README.md",
+  "engines": {
+    "node": ">=10"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "size-limit": [
+    {
+      "path": "dist/anf.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/anf.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "dependencies": {
+    "bignumber.js": "^9.1.0"
+  },
+  "devDependencies": {
+    "react": "^18.0.0",
+    "@testing-library/jest-dom": "^5.15.1",
+    "@testing-library/react": "^13.0.0",
+    "@types/jest": "^27.0.3",
+    "@umijs/fabric": "^2.8.1",
+    "@umijs/test": "^3.0.5",
+    "dumi": "^1.1.0",
+    "father": "^4.0.0-rc.2",
+    "gh-pages": "^3.0.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^2.2.1",
+    "yorkie": "^2.0.0"
+  }
+}

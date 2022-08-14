@@ -1,0 +1,107 @@
+variables:
+  GIT_STRATEGY: none
+
+cache:
+  paths:
+    - node_modules
+
+stages:
+  - checkout
+  - install
+  - lint
+  - build
+  - test
+  - release
+  - push
+
+# 拉取代码
+job_checkout:
+  stage: checkout
+  tags:
+    - zys-gitlab-runner
+  only:
+    refs:
+      - master
+      - tags
+  variables:
+    GIT_STRATEGY: clone
+    GIT_CHECKOUT: "false"
+  script:
+    - git checkout dev
+
+# install
+job_install:
+  stage: install
+  tags:
+    - zys-gitlab-runner
+  only:
+    refs:
+      - master
+      - tags
+  script:
+    - yarn install
+
+# eslint
+job_lint:
+  stage: lint
+  tags:
+    - zys-gitlab-runner
+  only:
+    - master
+  script:
+    - yarn lint
+
+# 构建
+job_build:
+  stage: build
+  tags:
+    - zys-gitlab-runner
+  only:
+    refs:
+      - master
+      - tags
+  script:
+    - yarn build
+
+# 测试
+job_test:
+  stage: test
+  tags:
+    - zys-gitlab-runner
+  only:
+    refs:
+      - master
+      - tags
+  script:
+    - yarn test
+
+# 发包
+job_release:
+  stage: release
+  tags:
+    - zys-gitlab-runner
+  only:
+    refs:
+      - tags
+    # variables:
+      # - $CI_COMMIT_TAG =~ /^v\d{1,2}\.\d{1,2}\.\d{1,2}.*$/
+  script:
+    - npm set registry https://registry.npmmirror.com/
+    - npm config set user.email "1562743134@qq.com" --location=project
+    - npm config set user.name "赵永盛" --location=project
+    - npm config set userconfig "./.npmrc"
+    - npm publish
+
+# 对脚本执行过程中产生的文件变动，自动提交
+job_push:
+  stage: push
+  tags:
+    - zys-gitlab-runner
+  only:
+    - master
+  script:
+    - echo "---------${CI_COMMIT_REF_NAME}:run git---------"
+    - git status
+    - git add .
+    - git commit -m "(CI) auto publish" || true
+    - git push https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com:fantian007/anf.git/ HEAD:master || true
