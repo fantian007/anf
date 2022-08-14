@@ -1,33 +1,9 @@
-# demo
+<p align="center">
+  <a href="https://fantian007.github.io/anf">
+    <img width="200" src="./logo.png">
+  </a>
+</p>
 
-## Getting Started
+<div align="center">
 
-Install dependencies,
-
-```bash
-$ npm i
-```
-
-Start the dev server,
-
-```bash
-$ npm start
-```
-
-Build documentation,
-
-```bash
-$ npm run docs:build
-```
-
-Run test,
-
-```bash
-$ npm test
-```
-
-Build library via `father`,
-
-```bash
-$ npm run build
-```
+简单易用的数值格式化库  
