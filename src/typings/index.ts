@@ -73,14 +73,20 @@ export interface IDelayCalcFunc {
 export interface IAutoNumberFormatFunc {
   /**
    * 传入值，使用默认配置进行格式化
+   * 
+   * @see https://fantian007.github.io/anf
    */
   (value: IValue): string;
   /**
    * 传入配置，输出带配置的格式化函数，可以用该函数格式化多个值
+   * 
+   * @see https://fantian007.github.io/anf
    */
   (option: IOption): IDelayCalcFunc;
   /**
    * 传入配置+值，输出格式化的字符串
+   * 
+   * @see https://fantian007.github.io/anf
    */
   (option: IOption, value: IValue): string;
 }
