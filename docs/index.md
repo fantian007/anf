@@ -1,6 +1,6 @@
 ---
 hero:
-  title: anf.js
+  title: anf111.js
   desc: 数值格式化，如此简单！
   actions:
     - text: 开始
