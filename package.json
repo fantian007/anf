@@ -2,7 +2,7 @@
   "private": true,
   "name": "anf",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
