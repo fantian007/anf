@@ -1,4 +1,4 @@
-name: npm package release
+name: 部署文档
 
 on:
   push:
@@ -6,8 +6,7 @@ on:
       - 'release/v**'
 
 jobs:
-  publish-gpr:
-    needs: build
+  docs-deploy:
     runs-on: ubuntu-latest
     permissions:
       packages: write
