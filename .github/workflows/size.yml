@@ -1,4 +1,4 @@
-name: size
+name: 文件大小检查
 on: [pull_request]
 jobs:
   size:

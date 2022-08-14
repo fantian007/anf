@@ -1,4 +1,4 @@
-name: npm package release
+name: npm 发包
 
 on:
   push:
