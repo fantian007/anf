@@ -1,5 +1,5 @@
 ---
-title: 扩展输出策略111
+title: 扩展输出策略
 order: 2
 nav:
   path: /anf/docs/guide
@@ -18,7 +18,7 @@ group:
 - 后缀
 
 ### 使用
-<!-- <code defaultShowCode="true" src="../demos/CustomFormatStrategy/index.tsx"></code> -->
+<code defaultShowCode="true" src="../demos/CustomFormatStrategy/index.tsx"></code>
 
 ### 特性
 - 实现自定义策略，注册之后即可使用

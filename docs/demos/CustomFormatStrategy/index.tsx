@@ -30,4 +30,4 @@ const MyStrategy = class extends AbstractFormatStrategy {
 StrategyManager.register(new MyStrategy('my'));
 
 // 使用
-export default () => (<h1>{anf({ calcStrategy: 'my' }, 1234)}</h1>);
+export default () => (<h1>{anf({ formatStrategy: 'my' }, 1234)}</h1>);
