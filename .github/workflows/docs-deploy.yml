@@ -1,0 +1,24 @@
+name: npm package release
+
+on:
+  push:
+    branches:
+      - 'release/v**'
+
+jobs:
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://mirrors.cloud.tencent.com/npm/
+      - run: npm i -g yarn
+      - run: yarn
+      - run: yarn docs:build
+      - run: git subtree push --prefix=docs-dist origin gh-pages
