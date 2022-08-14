@@ -2,11 +2,11 @@
 title: 后缀空格
 order: 4
 nav:
-  path: /docs/guide
+  path: /anf/docs/guide
   title: 文档
   order: 1
 group:
-  path: /docs/guide/props
+  path: /anf/docs/guide/props
   title: 配置项
   order: 2
 ---

@@ -2,11 +2,11 @@
 title: 默认值
 order: 0
 nav:
-  path: /docs/guide
+  path: /anf/docs/guide
   title: 文档
   order: 1
 group:
-  path: /docs/guide/props
+  path: /anf/docs/guide/props
   title: 配置项
   order: 2
 ---

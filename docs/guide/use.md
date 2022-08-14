@@ -2,11 +2,11 @@
 title: 使用
 order: 3
 nav:
-  path: /docs/guide
+  path: /anf/docs/guide
   title: 文档
   order: 1
 group:
-  path: /docs/guide/start
+  path: /anf/docs/guide/start
   title: 快速开始
   order: 1
 ---

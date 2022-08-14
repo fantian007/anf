@@ -4,7 +4,7 @@ hero:
   desc: 数值格式化，如此简单！
   actions:
     - text: 开始
-      link: /docs/guide/start/desc
+      link: /anf/docs/guide/start/desc
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: 语义化API
