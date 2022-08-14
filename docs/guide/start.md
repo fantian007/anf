@@ -13,9 +13,13 @@ group:
 
 ### 安装
 
-```shell
+#### 使用 npm 安装
+```bash
 yarn add @sprit/anf
 ```
 
 
 ##### 提供 umd 文件
+```html
+<script type="text/javascript" src="https://unpkg.com/@sprit/anf@1.0.0/dist/umd/anf.min.js"></script>
+```
