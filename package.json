@@ -17,7 +17,9 @@
   "files": [
     "dist",
     "test",
-    "README.md"
+    "logo.png",
+    "README.md",
+    "pageage.json"
   ],
   "homepage": "https://fantian007.github.io/anf",
   "repository": {
