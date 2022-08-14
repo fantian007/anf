@@ -6,7 +6,7 @@ import anf, { StrategyManager, AbstractFormatStrategy, Helpers } from 'anf';
 /**
  * 实现自定义策略
  * 
- * @description 将 数值小于0 的展示为
+ * @description 将后缀转为 💰
  * @param name {string} - 策略名
  */
 const MyStrategy = class extends AbstractFormatStrategy {
