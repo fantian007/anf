@@ -2,11 +2,11 @@
 title: 使用
 order: 3
 nav:
-  path: /anf/docs/guide
+  path: /docs/guide
   title: 文档
   order: 1
 group:
-  path: /anf/docs/guide/start
+  path: /docs/guide/start
   title: 快速开始
   order: 1
 ---
@@ -23,7 +23,7 @@ const value = anf(123.456);
 
 console.log(value); // 123.46
 ```
-走默认的格式化配置，参考 [默认值](/anf/docs/guide/start/desc)
+走默认的格式化配置，参考 [默认值](/docs/guide/start/desc)
 
 #### 方式二
 ```javascript

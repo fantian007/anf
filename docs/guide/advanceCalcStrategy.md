@@ -2,11 +2,11 @@
 title: 扩展计算策略
 order: 1
 nav:
-  path: /anf/docs/guide
+  path: /docs/guide
   title: 文档
   order: 1
 group:
-  path: /anf/docs/guide/advance
+  path: /docs/guide/advance
   title: 高阶
   order: 3
 ---

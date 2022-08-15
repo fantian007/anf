@@ -2,11 +2,11 @@
 title: 科学计数法
 order: 7
 nav:
-  path: /anf/docs/guide
+  path: /docs/guide
   title: 文档
   order: 1
 group:
-  path: /anf/docs/guide/props
+  path: /docs/guide/props
   title: 配置项
   order: 2
 ---
