@@ -14,7 +14,7 @@ const MyStrategy = class extends AbstractFormatStrategy {
     super(name);
   }
 
-  // calc 是抽象方法，要自己实现。接受4个参数，入参值、配置项、 解析值、计算值
+  // format 是抽象方法，要自己实现。接受4个参数，入参值、配置项、 解析值、计算值
   format(value: IValue, option: IOption, parse: IParse, calc: ICalc): string {
     const {
       $sign,
