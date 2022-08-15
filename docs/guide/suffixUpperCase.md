@@ -15,7 +15,7 @@ group:
 ```javascript
 import anf from '@sprit/anf';
 
-anf('12345.67px'); // 12,345.67PX
+anf({ suffixUpperCase: true }, '12345.67px'); // 12,345.67PX
 ```
 
 ### 特性
