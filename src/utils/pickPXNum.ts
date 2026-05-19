@@ -1,12 +1,9 @@
 /**
  * 提取像素字符串中的数值部分
- * @example 12px -> 12
- * 
- * @param px {string} - 带像素单位的字符串
- * @returns number
+ * @example '12px' -> 12, '12PX' -> 12
  */
-const pickPxNum = (px: string): number => {
-  return parseFloat(px.replace(/px/, ''));
+const pickPXNum = (value: string): number => {
+  return parseFloat(value.replace(/px$/i, ''));
 }
 
-export default pickPxNum;
+export default pickPXNum;

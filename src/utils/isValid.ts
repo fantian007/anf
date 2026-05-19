@@ -1,13 +1,9 @@
 /**
  * 是否有效输入值
- * 
- * @param value {string} - 是否有效输入值
- * @returns boolean
+ * 支持: 正负号 + 数字 + 可选小数 + 可选科学计数法 + 可选后缀
  */
-const isValid = (_value: string) => {
-  // return /^[+-]?\d+(\.(?=\d))?\d*\s*[\w|@#$%|\u4e00-\u9fa5]*$/.test(value);
-  // return /^[+-]?\d+(,\d+)*(.\d+(e\d+)?)?\d*\s*[\w|@#$%|\u4e00-\u9fa5]*$/.test(value);
-  return true;
+const isValid = (value: string): boolean => {
+  return /^[+-]?[\d,]+(\.\d+)?([eE][+-]?\d+)?.*$/.test(value.trim());
 }
 
 export default isValid;

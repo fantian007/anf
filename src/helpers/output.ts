@@ -69,7 +69,7 @@ const output = (variables: IFinalVars): string => {
         [$suffix, [() => !isNil($suffix)]],
         [space, [() => !isBoolean(space)]]
       ],
-      output: `${$sign}${$value}${$suffix}`
+      output: `${$sign}${$value}${$suffix?.trim()}`
     },
     {
       filters: [

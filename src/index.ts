@@ -161,7 +161,7 @@ export class AutoNumberFormat {
     calcStrategyIns = StrategyManager.getStrategy('calc', calcStrategy) as AbstractCalcStrategy;
 
     if (!calcStrategyIns) {
-      calcStrategyIns = StrategyManager.getStrategy('format', DEFAULT_CALC_STRATEGY) as AbstractCalcStrategy;
+      calcStrategyIns = StrategyManager.getStrategy('calc', DEFAULT_CALC_STRATEGY) as AbstractCalcStrategy;
     }
 
     this.calcValue = this.calc(mergedOption, calcStrategyIns);
