@@ -2,7 +2,7 @@
   "name": "@sprit/anf",
   "description": "数值格式化工具",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "NODE_OPTIONS=--openssl-legacy-provider dumi build",

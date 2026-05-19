@@ -31,12 +31,11 @@
 ## 安装
 
 ```bash
-# npm registry
+# npm
 npm install @sprit/anf
 
 # GitHub Packages
-npm login --registry=https://npm.pkg.github.com
-npm install @fantian007/anf
+npm install @fantian007/anf --registry=https://npm.pkg.github.com
 ```
 
 ## 快速开始
