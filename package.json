@@ -1,5 +1,5 @@
 {
-  "name": "@sprit/anf",
+  "name": "@fantian007/anf",
   "description": "数值格式化工具",
   "license": "MIT",
   "version": "1.0.1",
@@ -40,6 +40,9 @@
   "maintainers": [
     "1562743134@qq.com"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "readme": "README.md",
   "engines": {
     "node": ">=10"
