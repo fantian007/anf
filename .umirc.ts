@@ -8,6 +8,16 @@ export default defineConfig({
   outputPath: 'docs-dist',
   publicPath: '/anf/',
   mode: 'site',
-  base: '/anf'
+  base: '/anf',
+  styles: [
+    `pre[class*='language-'] {
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+    }
+    code {
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+    }`
+  ],
   // more config: https://d.umijs.org/config
 });
