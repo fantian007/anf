@@ -1,21 +1,11 @@
-import { ICalcStrategy, IFormatStrategy, IStrategyType } from "../typings"
+import { ICalcStrategy, IFormatStrategy, IStrategyType } from '../typings';
 
-class Strategy {
-  public type: IStrategyType; // 策略类型
-  public name: ICalcStrategy | IFormatStrategy; // 策略名
+abstract class Strategy {
+  abstract readonly type: IStrategyType;
+  abstract readonly name: ICalcStrategy | IFormatStrategy;
 
-  constructor (type: IStrategyType, name: ICalcStrategy | IFormatStrategy) {
-    this.type = type;
-    this.name = name;
-  }
-
-  public getName () {
-    return this.name;
-  }
-
-  public getType () {
-    return this.type;
-  }
+  getType() { return this.type; }
+  getName() { return this.name; }
 }
 
 export default Strategy;

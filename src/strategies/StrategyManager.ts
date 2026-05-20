@@ -5,74 +5,38 @@ import DefaultFormatStrategy from './format/DefaultFormatStrategy';
 import BuiltInStrategies from './built-in';
 
 class StrategyManager {
-  private strageies: Strategy[] = [];
+  private calcStrategies = new Map<string, Strategy>();
+  private formatStrategies = new Map<string, Strategy>();
 
-  constructor (strategies: Strategy[]) {
-    this.strageies = strategies;
+  constructor(strategies: Strategy[]) {
+    for (const s of strategies) this.register(s);
   }
 
-  /**
-   * 注册策略
-   * 
-   * @param strategy {Strategy} - 策略
-   */
   register(strategy: Strategy) {
-    const type = strategy.getType();
-    const name = strategy.getName();
-
-    const existSameStrategyIndex = this.getStrategyIndex(type, name);
-
-    // 存在相同策略，替换
-    if (existSameStrategyIndex !== -1) {
-      this.strageies[existSameStrategyIndex] = strategy;
-    }
-    // 否则，新增
-    else {
-      this.strageies.push(strategy);
+    if (strategy.type === 'calc') {
+      this.calcStrategies.set(strategy.name, strategy);
+    } else {
+      this.formatStrategies.set(strategy.name, strategy);
     }
   }
 
-  /**
-   * 获取策略
-   * 
-   * @param type {IStrategyType} - 策略类型
-   * @param name {ICalcStrategy | IFormatStrategy} - 策略名
-   * @returns Strategy | undefined
-   */
-  getStrategy(type: IStrategyType, name: ICalcStrategy | IFormatStrategy) {
-    return this.strageies.find(f => f.getType() === type && f.getName() === name);
-  }
- 
-  /**
-   * 获取策略在策略集合中的索引
-   * 
-   * @param type {IStrategyType} - 策略类型
-   * @param name {ICalcStrategy | IFormatStrategy} - 策略名
-   * @returns number
-   */
-  getStrategyIndex(type: IStrategyType, name: ICalcStrategy | IFormatStrategy) {
-    return this.strageies.findIndex(f => f.getType() === type && f.getName() === name);
+  getStrategy<T extends Strategy = Strategy>(type: IStrategyType, name: ICalcStrategy | IFormatStrategy): T | undefined {
+    if (type === 'calc') return this.calcStrategies.get(name) as T | undefined;
+    return this.formatStrategies.get(name) as T | undefined;
   }
 
-  /**
-   * 获取策略集合
-   * 
-   * @returns Strategy[]
-   */
-  getStrategies() {
-    return this.strageies;
+  getStrategies(type?: IStrategyType): Strategy[] {
+    if (type === 'calc') return [...this.calcStrategies.values()];
+    if (type === 'format') return [...this.formatStrategies.values()];
+    return [...this.calcStrategies.values(), ...this.formatStrategies.values()];
   }
 }
 
-// 默认策略
-const defaultStrateies: Strategy[] = [];
-
-// 默认计算策略
-for (const strategy of BuiltInStrategies) {
-  defaultStrateies.push(new DefaultCalcStrategy(strategy.name, strategy.data));
+const defaultStrategies: Strategy[] = [];
+for (const s of BuiltInStrategies) {
+  defaultStrategies.push(new DefaultCalcStrategy(s.name, s.data));
 }
-// 默认输出策略
-defaultStrateies.push(new DefaultFormatStrategy('default'));
+defaultStrategies.push(new DefaultFormatStrategy('default'));
 
 export { StrategyManager };
-export default new StrategyManager(defaultStrateies);
+export default new StrategyManager(defaultStrategies);
