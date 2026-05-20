@@ -1,41 +1,376 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png"
-    />
-    <link rel="stylesheet" href="/anf/umi.3dfdd0be.css" />
-    <script>
-      window.routerBase = "/anf";
-    </script>
-    <script>
-      //! umi version: 3.5.43
-    </script>
-    <script>
-      !(function () {
-        var e =
-            navigator.cookieEnabled && void 0 !== window.localStorage
-              ? localStorage.getItem("dumi:prefers-color")
-              : "auto",
-          o = window.matchMedia("(prefers-color-scheme: dark)").matches,
-          t = ["light", "dark", "auto"];
-        document.documentElement.setAttribute(
-          "data-prefers-color",
-          e === t[2] ? (o ? t[1] : t[0]) : t.indexOf(e) > -1 ? e : t[0]
-        );
-      })();
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>anf.js · Auto Number Format</title>
+<style>
+:root{--bg:#fff;--bg-alt:#f8fafc;--bg-card:#fff;--text:#0f172a;--text-sec:#64748b;--accent:#3b82f6;--accent-hover:#2563eb;--accent-light:#eff6ff;--accent-glow:rgba(59,130,246,.12);--orange:#f97316;--green:#22c55e;--purple:#8b5cf6;--border:#e2e8f0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.05);--shadow-lg:0 10px 25px rgba(0,0,0,.08);--font:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans SC',sans-serif;--mono:'JetBrains Mono','Fira Code','SF Mono',monospace;--transition:.3s;--nh:64px}
+[data-theme=dark]{--bg:#0b1120;--bg-alt:#131c2f;--bg-card:#121b2d;--text:#e2e8f0;--text-sec:#8896b0;--accent:#60a5fa;--accent-hover:#93bbfd;--accent-light:#1a2744;--orange:#fb923c;--green:#4ade80;--purple:#a78bfa;--border:#1e2d45;--shadow-lg:0 10px 25px rgba(0,0,0,.4)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+a{color:var(--accent)}a:hover{color:var(--accent-hover)}
+::selection{background:var(--accent);color:#fff}
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nh);background:rgba(255,255,255,.8);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:999}[data-theme=dark] .navbar{background:rgba(11,17,32,.8)}
+.nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem}
+.nav-brand .logo{display:inline-flex;width:32px;height:32px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);border-radius:8px;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{padding:8px 14px;border-radius:8px;font-size:.88rem;color:var(--text-sec);transition:all .2s}
+.nav-links a:hover{background:var(--accent-light);color:var(--accent)}
+.theme-toggle{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:0 0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all var(--transition);margin-left:8px;color:var(--text-sec)}
+.theme-toggle:hover{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
+.hero{padding:calc(var(--nh) + 80px) 24px 72px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 400px at 30% 25%,var(--accent-glow),transparent),radial-gradient(ellipse 500px 300px at 70% 60%,rgba(139,92,246,.07),transparent);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:20px;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:500;margin-bottom:24px}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:3rem;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-bottom:16px;position:relative}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent),#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 .lite{font-weight:300;font-size:2.2rem;display:block;margin-top:4px}
+.hero p{max-width:560px;margin:0 auto 36px;font-size:1.08rem;color:var(--text-sec);line-height:1.7}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:8px;font-weight:500;font-size:15px;transition:all var(--transition);cursor:pointer;border:none;text-decoration:none!important}
+.btn-primary{background:var(--accent);color:#fff!important;box-shadow:0 4px 16px var(--accent-glow)}
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px)}
+.btn-secondary{background:var(--bg-alt);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--border)}.btn-ghost{background:0 0;color:var(--text-sec)}
+.btn-ghost:hover{background:var(--bg-alt);color:var(--text)}
+.stats-bar{display:flex;justify-content:center;gap:40px;padding:28px 24px;max-width:800px;margin:0 auto 24px;border-top:1px solid var(--border);flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-item .num{font-size:1.9rem;font-weight:700;background:linear-gradient(135deg,var(--accent),#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-item .lbl{font-size:.82rem;color:var(--text-sec);margin-top:2px}
+section{padding:72px 0}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.sec-hdr{text-align:center;margin-bottom:48px}
+.sec-hdr .lab{display:inline-block;font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);background:var(--accent-light);padding:4px 14px;border-radius:4px;margin-bottom:12px}
+.sec-hdr h2{font-size:1.8rem;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.sec-hdr p{color:var(--text-sec);max-width:500px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all var(--transition);cursor:default}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.card .ic{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.card h3{font-size:1.05rem;font-weight:600;margin-bottom:8px}
+.card p{font-size:.9rem;color:var(--text-sec);line-height:1.65}
+.card .btags{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px}
+.card .tag{padding:2px 10px;border-radius:4px;background:var(--accent-light);color:var(--accent);font-size:.74rem;font-weight:500}
+.ic-b{background:#eff6ff;color:#3b82f6}.ic-p{background:#f5f3ff;color:#8b5cf6}.ic-g{background:#f0fdf4;color:#22c55e}.ic-o{background:#fff7ed;color:#f97316}.ic-r{background:#fef2f2;color:#ef4444}.ic-c{background:#ecfeff;color:#06b6d4}.ic-i{background:#eef2ff;color:#6366f1}
+[data-theme=dark] .ic-b{background:#1a2550}[data-theme=dark] .ic-p{background:#221a40}[data-theme=dark] .ic-g{background:#0f2a1a}[data-theme=dark] .ic-o{background:#2a1f10}[data-theme=dark] .ic-r{background:#2a1414}[data-theme=dark] .ic-c{background:#0a2628}[data-theme=dark] .ic-i{background:#1a1a3a}
+.demo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.demo-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 16px;text-align:center;transition:all var(--transition)}
+.demo-card:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.demo-card .inpt{font-family:var(--mono);font-size:.82rem;color:var(--text-sec);margin-bottom:8px;word-break:break-all}
+.demo-card .out{font-size:1.4rem;font-weight:700;color:var(--accent);margin-bottom:6px;word-break:break-all}
+.demo-card .strat{font-size:.78rem;color:var(--text-sec);margin-bottom:2px}
+.demo-card .desc{font-size:.72rem;color:var(--text-sec);opacity:.7}
+.param-panel{max-width:700px;margin:32px auto 0;padding:24px;border-radius:12px;border:1px solid var(--border);background:var(--bg-card)}
+.param-panel h4{margin-bottom:16px;font-weight:600}
+.param-row{display:flex;align-items:center;gap:12px;padding:8px 0;flex-wrap:wrap}
+.param-row label{font-size:.88rem;color:var(--text-sec);min-width:110px;font-weight:500}
+.param-row input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}
+.param-row .val{font-size:.85rem;font-family:var(--mono);color:var(--accent);min-width:30px;text-align:right}
+.param-row .switch{position:relative;width:44px;height:24px;background:var(--border);border-radius:12px;cursor:pointer;transition:all var(--transition);flex-shrink:0}
+.param-row .switch.on{background:var(--accent)}.param-row .switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:all var(--transition)}
+.param-row .switch.on::after{left:22px}
+.param-row select{padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);color:var(--text);font-size:.85rem}
+.param-row .cp-btn{padding:9px 20px;border-radius:6px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:.85rem;font-weight:500}
+.param-row .cp-btn:hover{background:var(--accent-hover)}
+.code-b{background:#0d1117;border:1px solid #21262d;border-radius:12px;overflow:hidden;margin:20px 0}[data-theme=light] .code-b{background:#f8fafc;border-color:var(--border)}
+.code-h{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #21262d;font-size:.8rem}[data-theme=light] .code-h{border-color:var(--border)}
+.code-h .lang{font-weight:500;color:#8b949e}[data-theme=light] .code-h .lang{color:var(--text-sec)}
+.code-bd{padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.7}
+.code-bd .cm{color:#8b949e;font-style:italic}.code-bd .kw{color:#ff7b72}.code-bd .str{color:#a5d6ff}.code-bd .fn{color:#d2a8ff}.code-bd .nm{color:#79c0ff}.code-bd .tp{color:#ffa657}
+[data-theme=light] .code-bd .cm{color:#6e7781}[data-theme=light] .code-bd .kw{color:#cf222e}[data-theme=light] .code-bd .str{color:#0550ae}[data-theme=light] .code-bd .fn{color:#8250df}[data-theme=light] .code-bd .nm{color:#0550ae}[data-theme=light] .code-bd .tp{color:#953800}
+.tw{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-alt);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-sec)}
+tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg-alt)}
+.alert{padding:16px 20px;border-radius:8px;margin:20px 0;display:flex;gap:12px;align-items:flex-start;font-size:.9rem}
+.alert .ai{font-size:1.2rem;flex-shrink:0;line-height:1.4}
+.alert-info{background:var(--accent-light);border-left:3px solid var(--accent)}
+.alert-warn{background:#fff7ed;border-left:3px solid var(--orange);color:#92400e}
+.alert-ok{background:#f0fdf4;border-left:3px solid var(--green)}
+[data-theme=dark] .alert-warn{background:#2a1f10;color:#fbbf24}[data-theme=dark] .alert-ok{background:#0f2a1a;color:#4ade80}
+.doc-l{display:grid;grid-template-columns:220px 1fr;gap:48px;padding:0 0 48px}
+.side{position:sticky;top:calc(var(--nh) + 24px);align-self:start}
+.side ul{list-style:none}.side li{padding:7px 12px;border-radius:8px;font-size:.88rem;cursor:pointer;transition:all .2s;color:var(--text-sec)}
+.side li:hover,.side li.act{background:var(--accent-light);color:var(--accent)}.side li.act{font-weight:600}
+.side li.gr{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-sec);padding:16px 12px 4px;cursor:default;font-weight:600}
+.doc-c h2{font-size:1.6rem;font-weight:700;margin:40px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border);letter-spacing:-.02em}
+.doc-c h2:first-child{margin-top:0}.doc-c h3{font-size:1.15rem;font-weight:600;margin:28px 0 10px}
+.doc-c p{margin:12px 0;color:var(--text-sec)}.doc-c ul{padding-left:20px;color:var(--text-sec);line-height:2}
+.doc-c pre{background:var(--bg-alt);padding:12px 16px;border-radius:8px;font-family:var(--mono);font-size:.82rem;overflow-x:auto;margin:12px 0;border:1px solid var(--border)}
+.roadmap{position:relative;padding-left:32px}
+.roadmap::before{content:'';position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.r-item{position:relative;padding:0 0 28px 24px}.r-item:last-child{padding-bottom:0}
+.r-item .dot{position:absolute;left:-32px;top:4px;width:14px;height:14px;border-radius:50%;border:3px solid var(--bg);z-index:1}
+.r-item .dot.done{background:#22c55e;box-shadow:0 0 0 2px #22c55e40}
+.r-item .dot.go{background:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);animation:pulse 2s ease-in-out infinite}
+.r-item .dot.td{background:var(--border)}
+.r-item h4{font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.r-item .st{font-size:.72rem;padding:1px 8px;border-radius:3px;font-weight:500}
+.st-done{background:#dcfce7;color:#166534}.st-go{background:var(--accent-light);color:var(--accent)}.st-td{background:var(--bg-alt);color:var(--text-sec)}
+[data-theme=dark] .st-done{background:#0f2a1a;color:#4ade80}[data-theme=dark] .st-td{background:#1a1a2e}
+.r-item p{font-size:.88rem;color:var(--text-sec)}
+footer{text-align:center;padding:48px 24px;border-top:1px solid var(--border);color:var(--text-sec);font-size:.85rem}
+footer .fl{display:flex;justify-content:center;gap:24px;margin-bottom:14px}
+footer .fl a{color:var(--text-sec)}footer .fl a:hover{color:var(--accent)}
+@media(max-width:768px){.hero h1{font-size:2rem}.hero h1 .lite{font-size:1.6rem}.stats-bar{gap:20px}.grid{grid-template-columns:1fr}.demo-grid{grid-template-columns:1fr}.param-panel{padding:16px}.doc-l{grid-template-columns:1fr}.side{display:none}.navbar{padding:0 16px}.nav-links a{display:none}.sec-hdr h2{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-brand"><span class="logo">anf</span><span>anf.js</span></div>
+  <div class="nav-links">
+    <a href="#demo">演示</a><a href="#guide">指南</a><a href="#api">API</a><a href="#strategy">策略</a><a href="#docs">文档</a><a href="#roadmap">路线</a>
+    <button class="theme-toggle" id="tt">&#127769;</button>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span><span>v4.0.0 &middot; @sprit/anf &middot; 零依赖</span></div>
+  <h1><span class="grad">anf.js</span><span class="lite">Auto Number Format &mdash; 简单优雅的数值格式化</span></h1>
+  <p>轻量级、零依赖的 JavaScript 数值格式化库。支持中文万/亿、英文K/M/B、Star星级映射、自定义计算策略，精度控制和科学计数法展开。</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#demo">&#127919; 在线试玩</a>
+    <a class="btn btn-secondary" href="https://github.com/fantian007/anf" target="_blank">&#128230; GitHub</a>
+    <a class="btn btn-ghost" href="#guide">&#128214; 指南 &rarr;</a>
+  </div>
+</section>
+<div class="stats-bar">
+  <div class="stat-item"><div class="num">115</div><div class="lbl">测试用例</div></div>
+  <div class="stat-item"><div class="num">8</div><div class="lbl">计算策略</div></div>
+  <div class="stat-item"><div class="num">3</div><div class="lbl">调用方式</div></div>
+  <div class="stat-item"><div class="num">0</div><div class="lbl">外部依赖</div></div>
+  <div class="stat-item"><div class="num">99%</div><div class="lbl">测试覆盖</div></div>
+  <div class="stat-item"><div class="num">4KB</div><div class="lbl">压缩后</div></div>
+</div>
+<div class="container" id="demo">
+<section>
+<div class="sec-hdr"><span class="lab">Live Demo</span><h2>在线交互演示</h2><p>输入数字，实时查看不同策略的格式化结果，调节所有参数</p></div>
+<div style="max-width:500px;margin:0 auto 24px">
+<input type="text" id="di" value="123456789" style="width:100%;padding:14px 18px;font-size:1.1rem;font-family:var(--mono);border:2px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--text);outline:none;transition:border-color .3s" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor=''">
+</div>
+<div class="demo-grid" id="dr"></div>
+<div class="param-panel">
+<h4>&#9881;&#65039; 参数调节</h4>
+<div class="param-row"><label>precision</label><input type="range" id="pp" min="0" max="6" value="2" step="1"><span class="val" id="pv">2</span></div>
+<div class="param-row"><label>delimiter</label>
+<select id="pd"><option value=",">','（逗号）</option><option value=" ">' '（空格）</option><option value="_">'_'（下划线）</option><option value="false">false（禁用）</option></select></div>
+<div class="param-row"><label>trimTailZero</label><div class="switch on" id="sTrim" onclick="this.classList.toggle('on');rd()"></div><span class="val" id="vTrim">true</span></div>
+<div class="param-row"><label>suffixUpperCase</label><div class="switch on" id="sUpper" onclick="this.classList.toggle('on');rd()"></div><span class="val" id="vUpper">true</span></div>
+<div class="param-row"><label>space</label><div class="switch" id="sSpace" onclick="this.classList.toggle('on');rd()"></div><span class="val" id="vSpace">false</span></div>
+<div class="param-row"><label>defaultValue</label>
+<select id="pDef"><option value="-">'-'（短横）</option><option value="--">'--'</option><option value="N/A">'N/A'</option><option value="">''（空）</option></select></div>
+<div class="param-row" style="justify-content:center;margin-top:12px"><button class="cp-btn" onclick="cp()">&#128203; 复制结果</button></div>
+</div>
+</section>
+</div>
+<script>
+var di=document.getElementById('di'),dr=document.getElementById('dr');
+var pp=document.getElementById('pp'),pd=document.getElementById('pd'),pDef=document.getElementById('pDef');
+function fNum(v,prec,delim,trim,sp,dft){
+  if(v===0||v==='0')return sp?'0':'0';
+  if(!v&&v!==0&&v!=='0')return dft;var n=parseFloat(v);if(isNaN(n))return dft;
+  var s=n.toFixed(prec);if(trim)s=s.replace(/\.?0+$/,'');
+  if(delim!==false&&typeof delim==='string'){var ps=s.split('.');ps[0]=ps[0].replace(/\B(?=(\d{3})+(?!\d))/g,delim);s=ps.join('.')}
+  return s;
+}
+function cS(val,str,prec,trim,upper,sp,dft){
+  if(!val&&val!==0&&val!=='0')return dft;var n=parseFloat(val);if(isNaN(n))return dft;
+  var unit,div;
+  if(str==='zh'){if(n>=1e8){unit='\u4ebf';div=1e8}else if(n>=1e4){unit='\u4e07';div=1e4}else return fNum(val,prec,false,trim,sp,dft)}
+  else if(str==='en'){if(n>=1e9){unit='B';div=1e9}else if(n>=1e6){unit='M';div=1e6}else if(n>=1e3){unit='K';div=1e3}else return fNum(val,prec,false,trim,sp,dft)}
+  else if(str==='star'){if(n>=1e4){unit='\u2606\u2606\u2606\u2606\u2606';div=1e4}else if(n>=1e3){unit='\u2606\u2606\u2606\u2606';div=1e3}else if(n>=1e2){unit='\u2606\u2606\u2606';div=1e2}else if(n>=10){unit='\u2606\u2606';div=10}else return String(n)+'\u2606'}
+  else return fNum(val,prec,false,trim,sp,dft);
+  var f=n/div;if(upper&&unit)unit=unit.toUpperCase();
+  var sf=f.toFixed(prec);if(trim)sf=sf.replace(/\.?0+$/,'');
+  return sp?sf+' '+unit:sf+unit;
+}
+function gp(){
+  return{prec:parseInt(pp.value),delim:pd.value==='false'?false:pd.value,trim:sTrim.classList.contains('on'),upper:sUpper.classList.contains('on'),sp:sSpace.classList.contains('on'),dft:pDef.value}
+}
+function rd(){
+  var p=gp();document.getElementById('pv').textContent=p.prec;
+  document.getElementById('vTrim').textContent=p.trim;
+  document.getElementById('vUpper').textContent=p.upper;
+  document.getElementById('vSpace').textContent=p.sp;rD();
+}
+pp.addEventListener('input',rd);pd.addEventListener('change',rd);pDef.addEventListener('change',rd);
+var sl=[{n:'zh_CN',d:'\u4e07/\u4ebf'},{n:'en_US',d:'K/M/B'},{n:'star',d:'\u2606\u7ea7\u6620\u5c04'},{n:'zh(compact)',d:'\u7d27\u51d1'},{n:'en(upper)',d:'\u5927\u5199\u540e\u7f00'},{n:'delimiter',d:'\u5343\u5206\u4f4d'},{n:'prec=0',d:'\u6574\u6570'},{n:'prec=4',d:'\u56db\u7cbe\u5ea6'}];
+function rD(){
+  var v=di.value,p=gp(),os=[];
+  sl.forEach(function(s){
+    var st=s.n.replace(/\(.*/,'');
+    if(st==='zh(compact)')st='zh';if(st==='en(upper)')st='en';
+    if(st==='delimiter'){os.push({n:s.n,d:s.d,o:fNum(v,p.prec,p.delim,p.trim,p.sp,p.dft)});return}
+    if(st==='prec=0'){os.push({n:s.n,d:s.d,o:cS(v,'en',0,p.trim,p.upper,p.sp,p.dft)});return}
+    if(st==='prec=4'){os.push({n:s.n,d:s.d,o:cS(v,'en',4,p.trim,p.upper,p.sp,p.dft)});return}
+    var st2=st==='zh_CN'?'zh':st==='en_US'?'en':'star';
+    os.push({n:s.n,d:s.d,o:cS(v,st2,p.prec,p.trim,p.upper,p.sp,p.dft)})
+  });
+  dr.innerHTML=os.map(function(s){return '<div class="demo-card"><div class="inpt">'+di.value+'</div><div class="out">'+s.o+'</div><div class="strat">'+s.n+'</div><div class="desc">'+s.d+'</div></div>'}).join('');
+}
+di.addEventListener('input',rD);rd();
+function cp(){var t=dr.querySelector('.demo-card .out').textContent;navigator.clipboard.writeText(t).then(function(){alert('\u5df2\u590d\u5236: '+t)})}
+</script>
 
-    <script src="/anf/umi.285a24c5.js"></script>
-  </body>
+<section style="background:var(--bg-alt);margin:0">
+<div class="container"><div style="padding:72px 0">
+<div class="sec-hdr"><span class="lab">Features</span><h2>全部功能特性</h2><p>小而美，零依赖，参数灵活可配</p></div>
+<div class="grid">
+<div class="card"><div class="ic ic-b">&#127919;</div><h3>精度控制</h3><p><code>precision</code> 精确指定小数位数（0-6），保留有效数字同时避免冗余。</p><div class="btags"><span class="tag">precision: number</span><span class="tag">默认 2</span></div></div>
+<div class="card"><div class="ic ic-p">&#128290;</div><h3>千分位分隔</h3><p><code>delimiter</code> 自定义千分位分隔符（, _ . 或空格），false 禁用。</p><div class="btags"><span class="tag">delimiter: string|false</span><span class="tag">默认 ','</span></div></div>
+<div class="card"><div class="ic ic-g">&#129529;</div><h3>末尾零处理</h3><p><code>trimTailZero</code> 自动去除小数末尾零，"1.00" &rarr; "1" 。</p><div class="btags"><span class="tag">trimTailZero: boolean</span><span class="tag">默认 true</span></div></div>
+<div class="card"><div class="ic ic-o">&#128196;</div><h3>后缀大小写</h3><p><code>suffixUpperCase</code> 控制后缀字母大小写，123m &rarr; 123M 。</p><div class="btags"><span class="tag">suffixUpperCase</span><span class="tag">默认 false</span></div></div>
+<div class="card"><div class="ic ic-r">&#9889;</div><h3>科学计数法</h3><p>自动展开 1e+6 &rarr; 1000000，兼容科学计数法输入。</p><div class="btags"><span class="tag">auto expand</span></div></div>
+<div class="card"><div class="ic ic-c">&#128268;</div><h3>后缀检测</h3><p>自动识别 %、px、元、$ 等原始后缀，格式化后保留。</p><div class="btags"><span class="tag">suffix detect</span></div></div>
+<div class="card"><div class="ic ic-i">&#129479;</div><h3>自定义策略</h3><p>通过 StrategyManager 注册自己的计算策略，无限扩展。</p><div class="btags"><span class="tag">StrategyManager</span></div></div>
+<div class="card"><div class="ic ic-b">&#127917;</div><h3>三种调用方式</h3><p>类方式 / 函数方式 / 柯里化，怎么顺手怎么来。</p><div class="btags"><span class="tag">class</span><span class="tag">function</span><span class="tag">curry</span></div></div>
+</div></div></div>
+</section>
+<div class="container" id="guide">
+<section>
+<div class="sec-hdr"><span class="lab">Quick Start</span><h2>使用指南</h2><p>安装即用，三种调用方式随你选</p></div>
+<div style="margin-bottom:32px"><h3 style="font-weight:600;margin-bottom:8px">安装</h3>
+<div class="code-b"><div class="code-h"><span class="lang">bash</span></div><div class="code-bd">npm install @sprit/anf</div></div></div>
+<h3 style="font-weight:600;margin-bottom:8px">基础用法</h3>
+<div class="code-b"><div class="code-h"><span class="lang">TypeScript</span><span>example.ts</span></div>
+<div class="code-bd">
+<span class="kw">import</span> autoNumberFormat, { AutoNumberFormat } <span class="kw">from</span> <span class="str">'@sprit/anf'</span>;
+
+<span class="cm">// 1. 类方式</span>
+<span class="kw">new</span> <span class="fn">AutoNumberFormat</span>(<span class="str">'123456789'</span>).<span class="fn">format</span>({
+  calcStrategy: <span class="str">'en_US'</span>,
+  suffixUpperCase: <span class="kw">true</span>
+});
+<span class="cm">// &rarr; '123.46M'</span>
+
+<span class="cm">// 2. 函数方式</span>
+<span class="fn">autoNumberFormat</span>({ calcStrategy: <span class="str">'zh_CN'</span> }, <span class="str">'123456'</span>);
+<span class="cm">// &rarr; '12.35万'</span>
+
+<span class="cm">// 3. 柯里化（缺参数返回预置函数，齐了出结果）</span>
+<span class="kw">const</span> fmt = <span class="fn">autoNumberFormat</span>({ calcStrategy: <span class="str">'zh_CN'</span> });
+<span class="fn">fmt</span>(<span class="str">'540453'</span>);
+<span class="cm">// &rarr; '54.05万'</span>
+</div></div>
+<div class="alert alert-info"><span class="ai">&#128161;</span><div>函数式调用自动判断参数完整度&mdash;缺参数就返回预置函数，齐了就出结果。</div></div>
+</section>
+</div>
+
+<div class="container" id="strategy">
+<section>
+<div class="sec-hdr"><span class="lab">Strategy</span><h2>计算策略</h2><p>内置策略 + 自定义扩展</p></div>
+<div class="tw"><table>
+<thead><tr><th>策略</th><th>说明</th><th>输入</th><th>输出</th></tr></thead>
+<tbody>
+<tr><td><code>zh_CN</code></td><td>万 / 亿</td><td>123456</td><td>12.35万</td></tr>
+<tr><td><code>en_US</code></td><td>K / M / B</td><td>123456789</td><td>123.46M</td></tr>
+<tr><td><code>star</code></td><td>星级映射</td><td>12345</td><td>1.23&#9733;&#9733;&#9733;&#9733;&#9733;</td></tr>
+</tbody></table></div>
+<h3 style="margin-top:32px;font-weight:600">自定义策略</h3>
+<div class="code-b"><div class="code-h"><span class="lang">TypeScript</span></div>
+<div class="code-bd">
+<span class="kw">import</span> { StrategyManager, AbstractCalcStrategy } <span class="kw">from</span> <span class="str">'@sprit/anf'</span>;
+<span class="kw">class</span> <span class="fn">MyStrategy</span> <span class="kw">extends</span> <span class="tp">AbstractCalcStrategy</span> {
+  <span class="fn">calc</span>(value, option, parse) {
+    <span class="cm">// 自定义计算逻辑</span>
+    <span class="kw">return</span> { <span class="str">'$sign'</span>: <span class="str">''</span>, <span class="str">'$value'</span>: <span class="str">'...'</span>, <span class="str">'$suffix'</span>: <span class="kw">null</span> };
+  }
+}
+<span class="fn">StrategyManager.register</span>(<span class="kw">new</span> <span class="fn">MyStrategy</span>(<span class="str">'myStrategy'</span>));
+</div></div>
+</section>
+</div>
+
+<div class="container" id="api">
+<section>
+<div class="sec-hdr"><span class="lab">API Reference</span><h2>IOption 配置项</h2><p>完整参数说明</p></div>
+<div class="tw"><table>
+<thead><tr><th>属性</th><th>类型</th><th>默认值</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><code>precision</code></td><td>number</td><td>2</td><td>小数精度（0&ndash;6）</td></tr>
+<tr><td><code>trimTailZero</code></td><td>boolean</td><td>true</td><td>去除末尾零</td></tr>
+<tr><td><code>delimiter</code></td><td>string | false</td><td>','</td><td>千分位分隔符</td></tr>
+<tr><td><code>suffix</code></td><td>string</td><td>&mdash;</td><td>自定义后缀</td></tr>
+<tr><td><code>suffixUpperCase</code></td><td>boolean</td><td>false</td><td>后缀大写</td></tr>
+<tr><td><code>space</code></td><td>boolean</td><td>false</td><td>值与后缀间加空格</td></tr>
+<tr><td><code>defaultValue</code></td><td>string</td><td>'-'</td><td>空值占位符</td></tr>
+<tr><td><code>calcStrategy</code></td><td>string</td><td>'zh_CN'</td><td>计算策略名</td></tr>
+<tr><td><code>formatStrategy</code></td><td>string</td><td>'default'</td><td>输出格式策略</td></tr>
+</tbody></table></div>
+<div class="alert alert-info"><span class="ai">&#128161;</span><div>所有 API 参数在交互演示区可实时调节，体验效果。</div></div>
+</section>
+</div>
+
+<div class="container" id="docs">
+<section>
+<div class="sec-hdr"><span class="lab">Documentation</span><h2>详细文档</h2><p>完整的 API 文档体系</p></div>
+<div class="doc-l">
+<aside class="side"><ul>
+<li class="gr">入门</li><li class="act">&#128214; 快速概览</li><li>&#9889; 快速开始</li><li>&#128230; 安装指南</li>
+<li class="gr" style="margin-top:16px">配置</li><li>precision</li><li>delimiter</li><li>trimTailZero</li><li>suffixUpperCase</li><li>suffix</li><li>space</li><li>defaultValue</li>
+<li class="gr" style="margin-top:16px">高级</li><li>&#9881;&#65039; 计算策略</li><li>&#128202; 输出策略</li><li>&#9918; 科学计数法</li>
+<li class="gr" style="margin-top:16px">扩展</li><li>&#129479; 自定义策略</li><li>&#128200; FormatStrategy</li>
+</ul></aside>
+<div class="doc-c">
+<h2>&#128214; 快速概览</h2>
+<p>anf.js (Auto Number Format) 是一个轻量级、零依赖的 JavaScript 数值格式化库。提供中英文等多套计算策略，支持精度控制、千分位分隔、科学计数法展开等丰富的格式化功能。</p>
+<div class="alert alert-info"><span class="ai">&#128161;</span><div>这是 anf.js 的文档测试页面，代码逻辑基于 <a href="https://github.com/fantian007/anf" target="_blank">fantian007/anf</a> 项目，交互演示可直接试用全部参数。</div></div>
+<h3>核心设计</h3>
+<ul>
+<li><strong>零依赖</strong> &mdash; 纯 JS 实现，无任何外部运行时依赖，压缩后约 4KB</li>
+<li><strong>策略模式</strong> &mdash; 计算策略与输出格式分离，自由组合</li>
+<li><strong>智能柯里化</strong> &mdash; 函数式调用自动判断参数完整度</li>
+<li><strong>三种调用方式</strong> &mdash; class / function / curry，即用即走</li>
+<li><strong>TypeScript 友好</strong> &mdash; 完整的类型定义文件</li>
+</ul>
+<h3>GitHub 资源</h3>
+<div class="alert alert-ok"><span class="ai">&#9989;</span><div>源码：<a href="https://github.com/fantian007/anf" target="_blank">github.com/fantian007/anf</a> &middot; npm：<code>@sprit/anf</code> &middot; License：MIT</div></div>
+<h3>IValue 示例</h3>
+<pre><span class="cm">// 支持的输入格式</span>
+'123456789'    <span class="cm">// 字符串数字</span>
+123456789      <span class="cm">// 数值</span>
+'1e+6'         <span class="cm">// 科学计数法</span>
+'123px'        <span class="cm">// 自动提取后缀</span>
+'12.34%'       <span class="cm">// 百分比保留</span>
+'￥100'         <span class="cm">// 货币符号保留</span>
+''             <span class="cm">// 空值返回 defaultValue</span></pre>
+</div></div>
+</section>
+</div>
+
+<div class="container" id="roadmap">
+<section>
+<div class="sec-hdr"><span class="lab">Roadmap</span><h2>开发路线图</h2><p>从 v1.0 到 v5.0 的演进</p></div>
+<div class="roadmap">
+<div class="r-item"><div class="dot done"></div><h4>v1.0 &middot; 基础格式化 <span class="st st-done">已发布</span></h4><p>precision、delimiter、suffix 核心功能首次发布到 npm。</p></div>
+<div class="r-item"><div class="dot done"></div><h4>v2.0 &middot; 计算策略 <span class="st st-done">已发布</span></h4><p>引入策略模式，zh_CN / en_US 等内置策略，StrategyManager 可扩展。</p></div>
+<div class="r-item"><div class="dot done"></div><h4>v3.0 &middot; 功能性调用 <span class="st st-done">已发布</span></h4><p>函数式智能柯里化、科学计数法展开、后缀自动检测。</p></div>
+<div class="r-item"><div class="dot go"></div><h4>v4.0 &middot; 格式化策略 <span class="st st-go">进行中</span></h4><p>FormatStrategy 输出格式自定义，支持不同地区的数字格式。</p></div>
+<div class="r-item"><div class="dot td"></div><h4>v5.0 &middot; i18n 生态 <span class="st st-td">规划中</span></h4><p>社区驱动多语言策略包，按需加载，插件化生态。</p></div>
+</div>
+</section>
+</div>
+
+<footer>
+<div class="fl">
+<a href="https://github.com/fantian007/anf">GitHub</a>
+<a href="https://fantian007.github.io/anf">GitHub Pages</a>
+<a href="https://www.npmjs.com/package/@sprit/anf">npm</a>
+<a href="https://github.com/fantian007">&#64;fantian007</a>
+</div>
+<p>anf.js &middot; Auto Number Format &middot; 文档测试页面</p>
+<p style="margin-top:4px;font-size:.8rem">&#128054; 墨羽 &middot; 2026 &middot; MIT License</p>
+</footer>
+
+<script>
+var tt=document.getElementById('tt'),html=document.documentElement;
+function st(t){html.setAttribute('data-theme',t);tt.textContent=t==='dark'?'\u2600\ufe0f':'\uD83C\uDF19';localStorage.setItem('anf-t',t)}
+var sv=localStorage.getItem('anf-t');if(sv)st(sv);
+tt.addEventListener('click',function(){st(html.getAttribute('data-theme')==='dark'?'light':'dark')});
+document.querySelectorAll('.side li:not(.gr)').forEach(function(i){i.addEventListener('click',function(){document.querySelectorAll('.side li').forEach(function(l){l.classList.remove('act')});this.classList.add('act')})});
+</script>
+</body>
 </html>
