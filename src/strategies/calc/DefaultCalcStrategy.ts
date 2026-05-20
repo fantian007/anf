@@ -9,6 +9,11 @@ import {
   processSuffixUppercase
 } from '../../helpers';
 
+/**
+ * 默认计算策略
+ * 前置条件：配置项未指定后缀
+ * 规则：以整数部分的长度区间自动计算后缀；如检测到后缀，或者指定后缀，那么不自动计算后缀
+ */
 class DefaultCalcStrategy extends AbstractCalcStrategy {
   readonly type = 'calc' as const;
   name: ICalcStrategy;
@@ -27,10 +32,13 @@ class DefaultCalcStrategy extends AbstractCalcStrategy {
     return this.data;
   }
 
+  // 获取除数因子和后缀
   getDividerAndSuffix(len: number = 0) {
     for (const [n, s] of this.dataMap.entries()) {
       if (len >= n) {
-        return { divider: Math.pow(1e1, n - 1), suffix: s };
+        const divider = Math.pow(1e1, n - 1);
+        const suffix = s;
+        return { divider, suffix };
       }
     }
     return null;
@@ -45,13 +53,18 @@ class DefaultCalcStrategy extends AbstractCalcStrategy {
     let $suffix: string | null = null;
     let bn = new BN(_value);
 
+    // 未检测到后缀，那么自动计算单位；否则，不进行单位的自动计算
     if (isNil(suffix)) {
       if (isEmpty(_suffix)) {
         const ret = this.getDividerAndSuffix(_integer.toString().length);
-        if (!isNil(ret)) {
+
+        if (isNil(ret)) {
+          $suffix = null;
+        } else {
           bn = bn.dividedBy(ret!.divider);
           $suffix = ret!.suffix;
         }
+
         $value = bn.toString();
       } else {
         $suffix = _suffix;
@@ -60,9 +73,13 @@ class DefaultCalcStrategy extends AbstractCalcStrategy {
       $suffix = suffix;
     }
 
+    // 精度处理
     $value = processPrecision($value, precision);
+    // 末尾0
     $value = processTrimNumTailZero($value, trimTailZero);
+    // 千分位
     $value = processThousandsSplit($value, delimiter);
+    // 后缀大小写
     $suffix = processSuffixUppercase($suffix, suffixUpperCase);
 
     return { $sign, $value, $suffix };
