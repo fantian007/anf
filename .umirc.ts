@@ -9,15 +9,14 @@ export default defineConfig({
   publicPath: '/anf/',
   mode: 'site',
   base: '/anf',
-  styles: [
-    `pre[class*='language-'] {
-      white-space: pre-wrap !important;
-      word-break: break-word !important;
-    }
-    code {
-      white-space: pre-wrap !important;
-      word-break: break-word !important;
-    }`
+  headScripts: [
+    `
+    (function() {
+      var style = document.createElement('style');
+      style.textContent = 'pre[class*="language-"]{white-space:pre-wrap!important;word-break:break-word!important}code{white-space:pre-wrap!important;word-break:break-word!important}';
+      document.head.appendChild(style);
+    })();
+    `
   ],
   // more config: https://d.umijs.org/config
 });
